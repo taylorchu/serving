@@ -299,9 +299,22 @@ cc_library(
     ],
 )
 
+cc_library(
+    name = "sentencepiece",
+    visibility = [
+        "//visibility:public",
+    ],
+    srcs = [
+        "_sentencepiece_processor_ops.so.1.13.1"
+    ],
+    alwayslink = 1,
+)
+
+
 SUPPORTED_TENSORFLOW_OPS = [
     "@org_tensorflow//tensorflow/contrib:contrib_kernels",
     "@org_tensorflow//tensorflow/contrib:contrib_ops_op_lib",
+    ":sentencepiece",
 ]
 
 TENSORFLOW_DEPS = [
