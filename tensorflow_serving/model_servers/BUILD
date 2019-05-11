@@ -391,7 +391,6 @@ cc_binary(
     deps = [
         ":tensorflow_model_server_main_lib",
     ],
-    features = [ "fully_static_link" ],
 )
 
 py_test(
