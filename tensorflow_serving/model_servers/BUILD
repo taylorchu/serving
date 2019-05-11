@@ -304,8 +304,11 @@ cc_library(
     visibility = [
         "//visibility:public",
     ],
+    hdrs = [
+        "sentencepiece_processor.h",
+    ],
     srcs = [
-        "_sentencepiece_processor_ops.so.1.13.1"
+        "libsentencepiece.a",
     ],
     alwayslink = 1,
 )
