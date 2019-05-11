@@ -71,15 +71,26 @@ RUN mkdir /bazel && \
     cd / && \
     rm -f /bazel/bazel-$BAZEL_VERSION-installer-linux-x86_64.sh
 
+
+
+
 # Download TF Serving sources (optionally at specific commit).
 WORKDIR /tensorflow-serving
 RUN git clone --branch=${TF_SERVING_VERSION_GIT_BRANCH} https://github.com/taylorchu/serving . && \
     git remote add upstream https://github.com/taylorchu/serving.git && \
-    git submodule update --init --recursive && \
     if [ "${TF_SERVING_VERSION_GIT_COMMIT}" != "head" ]; then git checkout ${TF_SERVING_VERSION_GIT_COMMIT} ; fi
 
 
+WORKDIR /sentencepiece
+RUN git clone https://github.com/google/sentencepiece . && \
+    cd ./tensorflow && \
+    ./make_py_wheel.sh native && \
+    cp _sentencepiece_processor_ops.so.1.13.1 /tensorflow-serving/tensorflow_serving/model_servers/
+
 FROM base_build as binary_build
+
+
+# WORKDIR /tensorflow-serving
 # Build, and install TensorFlow Serving
 ARG TF_SERVING_BUILD_OPTIONS="--config=nativeopt"
 RUN echo "Building with build options: ${TF_SERVING_BUILD_OPTIONS}"

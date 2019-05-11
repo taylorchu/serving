@@ -34,6 +34,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install TF Serving pkg
 COPY --from=build_image /usr/local/bin/tensorflow_model_server /usr/bin/tensorflow_model_server
 
+ENV LD_LIBRARY_PATH=/usr/local/lib:${LD_LIBRARY_PATH}
+COPY --from=build_image /tensorflow-serving/tensorflow_serving/model_servers/_sentencepiece_processor_ops.so.1.13.1 /usr/local/lib/
+COPY --from=build_image /usr/local/lib/python2.7/dist-packages/tensorflow/libtensorflow_framework.so /usr/local/lib/
+
 # Expose ports
 # gRPC
 EXPOSE 8500
