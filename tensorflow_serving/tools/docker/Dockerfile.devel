@@ -85,12 +85,12 @@ WORKDIR /sentencepiece
 RUN git clone https://github.com/google/sentencepiece . && \
     cd ./tensorflow && \
     ./make_py_wheel.sh native && \
-    cp _sentencepiece_processor_ops.so.1.13.1 /tensorflow-serving/tensorflow_serving/model_servers/
+    cp tf_sentencepiece/_sentencepiece_processor_ops.so.1.13.1 /tensorflow-serving/tensorflow_serving/model_servers/
 
 FROM base_build as binary_build
 
 
-# WORKDIR /tensorflow-serving
+WORKDIR /tensorflow-serving
 # Build, and install TensorFlow Serving
 ARG TF_SERVING_BUILD_OPTIONS="--config=nativeopt"
 RUN echo "Building with build options: ${TF_SERVING_BUILD_OPTIONS}"
