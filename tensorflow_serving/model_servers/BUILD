@@ -311,7 +311,7 @@ cc_library(
         "libsentencepiece.a",
     ],
     alwayslink = 1,
-    linkopts = ["-zmuldefs"],
+    linkopts = ["-Wl,-z,muldefs"],
 )
 
 
